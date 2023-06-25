@@ -4,6 +4,10 @@
 <div class="card" style="width: 18rem;">
   <img src="{{products.image}}" class="card-img-top" alt="Kairat">
   <div class="card-body">
+    {% for icon in product.icons_list %}
+    <img src={{icon.icon}} alt="mlml">
+    {% endfor %}
+   
     <h5 class="card-title">{{products.title}}</h5>
     <p class="card-text">{{products.description}}</p>
     <a href="#" class="btn btn-primary">Go somewhere</a>

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from posts.models import Product
+from posts.models import Product, Icon
 
 
 
@@ -14,3 +14,11 @@ def products_view(request):
             'product': product
         }
         return render(request, 'products/products.html', context=context_data)
+    
+def categoria_view(request):
+    if request.method == 'GET':
+        icons = Icon.objects.all()
+        context_data = {
+            'icons': icons
+        }
+        return render(request, 'products/categoris.html', context=context_data)
