@@ -1,17 +1,24 @@
 {% extends 'layouts/index.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock  %}
+
 {% block content %}
+<div class="product">
+
 {% for products in product %}
-<div class="card" style="width: 18rem;">
-  <img src="{{products.image}}" class="card-img-top" alt="Kairat">
-  <div class="card-body">
-    {% for icon in product.icons_list %}
-    <img src={{icon.icon}} alt="mlml">
-    {% endfor %}
-   
-    <h5 class="card-title">{{products.title}}</h5>
-    <p class="card-text">{{products.description}}</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+  <div class="card" style="width: 18rem;">
+    <img src="{{products.image.url}}" class="card-img-top" alt="Kairat">
+    <div class="card-body">
+      {% for fir in product.icons_list %}
+      <img src={{fir.icon.url}} alt="">
+      {% endfor %}
+      <h5 class="card-title">{{products.title}}</h5>
+      <p class="card-text">{{products.description}}</p>
+      <a href="/products/{{products.id}}/" class="btn btn-primary">Go somewhere</a>
+    </div>
   </div>
+  {% endfor %}
 </div>
-{% endfor %}
 {% endblock  %}
