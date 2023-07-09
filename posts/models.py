@@ -14,4 +14,6 @@ class Product(models.Model):
     @property
     def icons_list(self) ->list:
         return self.icons.all()
+
+
     
