@@ -1,4 +1,4 @@
-import os
+
 from django.db import models
 
 
@@ -9,7 +9,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to="photos",verbose_name="Фото")
     title = models.CharField(max_length=256)
     description = models.TextField()
-    icons = models.ManyToManyField(Icon)
+    
 
     @property
     def icons_list(self) ->list:

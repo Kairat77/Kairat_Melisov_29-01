@@ -1,6 +1,43 @@
 from django.shortcuts import render, redirect
+from rest_framework import viewsets
 from posts.models import Product, Icon
 from posts.forms import ProductCreateForm, CategoryCreateForm
+from rest_framework import generics
+from .serializers import ProductSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+class ProductAPIView(APIView):#автоматически генерирует
+    def get(self, request):  #отвечает за обработку get запросов
+        w = Product.objects.all()
+        return Response({'posts': ProductSerializer(w, many=True).data})
+    
+    def post(self, request):
+        serializer = ProductSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response({'post': serializer.data})
+    
+    def put(self,request, *args, **kwargs):
+        pk = kwargs.get("pk",None)
+        if not pk:
+            return Response({"error":"Method Put not allowed"})
+        try:
+            instance = Product.objects.get(pk=pk)
+        except:
+            return Response({"error":"Object doesnot exists"})
+        
+        serializer = ProductSerializer(data=request.data, instance=instance)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"post":serializer.data})
+
+
+# class ProductAPIView(generics.ListAPIView):
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+
 
 
 def main_view(request):
@@ -66,3 +103,4 @@ def categories_create_view(request):
                 form.add_error("icon", "Please choose a file.")
         context_data = {"form": form}
         return render(request, "products/categories.html", context=context_data)
+
